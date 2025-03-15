@@ -21,7 +21,7 @@ class FeedViewSet(viewsets.ModelViewSet):
         feed = serializer.save()
 
         # Fetch initial content
-        items, error = fetch_feed_content(feed)
+        items = fetch_feed_content(feed.url)
         if items:
             create_feed_items(feed, items)
             feed.mark_as_fetched()

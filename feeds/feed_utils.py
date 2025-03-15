@@ -222,7 +222,7 @@ def create_feed_items(feed_obj, items: List[Dict]) -> int:
                 feed=feed_obj,
                 title=item['title'],
                 content=item['content'],
-                published_at=item['published_at'],
+                published_at=item['published_date'],
                 guid=item['guid']
             )
             created_count += 1

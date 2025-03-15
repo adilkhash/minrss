@@ -16,9 +16,9 @@ class FeedSerializer(serializers.ModelSerializer):
     def validate_url(self, value: str) -> str:
         from .feed_utils import validate_feed_url
 
-        is_valid, error = validate_feed_url(value)
+        is_valid = validate_feed_url(value)
         if not is_valid:
-            raise serializers.ValidationError(error)
+            raise serializers.ValidationError("Error while validating URL")
         return value
 
 
