@@ -10,8 +10,8 @@ class Feed(models.Model):
 
     class Meta:
         indexes = [
-            models.Index(fields=['url']),
-            models.Index(fields=['last_fetched']),
+            models.Index(fields=["url"]),
+            models.Index(fields=["last_fetched"]),
         ]
 
     def __str__(self):
@@ -23,7 +23,7 @@ class Feed(models.Model):
 
 
 class FeedItem(models.Model):
-    feed = models.ForeignKey(Feed, on_delete=models.CASCADE, related_name='items')
+    feed = models.ForeignKey(Feed, on_delete=models.CASCADE, related_name="items")
     title = models.CharField(max_length=255)
     content = models.TextField()
     published_at = models.DateTimeField()
@@ -33,12 +33,12 @@ class FeedItem(models.Model):
 
     class Meta:
         indexes = [
-            models.Index(fields=['feed', 'guid']),
-            models.Index(fields=['feed', 'published_at']),
-            models.Index(fields=['is_read']),
+            models.Index(fields=["feed", "guid"]),
+            models.Index(fields=["feed", "published_at"]),
+            models.Index(fields=["is_read"]),
         ]
-        unique_together = ['feed', 'guid']
-        ordering = ['-published_at']
+        unique_together = ["feed", "guid"]
+        ordering = ["-published_at"]
 
     def __str__(self):
         return f"{self.feed.title or self.feed.url} - {self.title}"
