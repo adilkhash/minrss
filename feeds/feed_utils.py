@@ -201,3 +201,33 @@ def _parse_date(entry: Dict[str, Any]) -> Optional[datetime]:
                 continue
 
     return None
+
+
+def create_feed_items(feed_obj, items: List[Dict]) -> int:
+    """
+    Creates FeedItem objects from the parsed feed items.
+
+    Args:
+        feed_obj: Feed model instance
+        items: List of parsed feed items
+
+    Returns:
+        Number of items created
+    """
+    from .models import FeedItem
+    created_count = 0
+    for item in items:
+        try:
+            FeedItem.objects.create(
+                feed=feed_obj,
+                title=item['title'],
+                content=item['content'],
+                published_at=item['published_at'],
+                guid=item['guid']
+            )
+            created_count += 1
+        except Exception as e:
+            logger.error(f"Error creating feed item for {feed_obj.url}: {str(e)}")
+            continue
+
+    return created_count
